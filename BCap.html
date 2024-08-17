@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bCAP Program</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #ffecd2, #fcb69f);
+            color: #333;
+            overflow: hidden;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+            font-size: 2em;
+            letter-spacing: 2px;
+        }
+
+        .course-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2em;
+            gap: 2em;
+        }
+
+        .course-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 220px;
+            cursor: pointer;
+            text-align: center;
+            position: relative;
+            padding-top: 160px; /* Adjusted padding to avoid overlap */
+        }
+
+        .course-card img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .course-card h2, .course-card p {
+            margin: 0;
+            padding: 0.5em 1em;
+            position: relative;
+        }
+
+        .course-card h2 {
+            background-color: #333;
+            color: white;
+            font-size: 1.2em;
+        }
+
+        .course-card p {
+            color: gray;
+            padding-bottom: 1em;
+        }
+
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .course-card:hover::before {
+            opacity: 1;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .course-card:hover h2, .course-card:hover p {
+            color: #fff;
+        }
+
+        @keyframes moveBackground {
+            0% { background-position: 0 0; }
+            100% { background-position: 100% 100%; }
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/french-stucco.png');
+            opacity: 0.1;
+            z-index: -1;
+            animation: moveBackground 20s linear infinite;
+        }
+
+        .animated-background {
+            background-image: url('image.png'); /* Replace with your colorful background image */
+            background-size: cover;
+            background-repeat: no-repeat;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-background"></div>
+    <header>
+        bCAP Program
+    </header>
+    <main>
+        <div class="course-container">
+            <a href="https://bytexl.app/course-catalog-groups/3z7naufue/python?tab=all" class="course-card">
+                <img src="https://static.vecteezy.com/system/resources/previews/012/697/295/non_2x/3d-python-programming-language-logo-free-png.png" alt="Python Logo">
+                <h2>Python</h2>
+            </a>
+            <a href="https://bytexl.app/course-catalog-groups/3zarwnsvr/java?tab=all" class="course-card">
+                <img src="https://tse1.mm.bing.net/th?id=OIP.jap_cRszSOiPk-lu65mFLwHaEK&pid=Api&P=0&h=180" alt="Java Logo">
+                <h2>Java</h2>
+            </a>
+            <a href="https://bytexl.app/course-catalog-groups/3z3nxgnxd/c-programing-for-problem-solving?tab=all" class="course-card">
+                <img src="https://tse2.mm.bing.net/th?id=OIP.-wK8kSbegCP7kdE8hVjRCQAAAA&pid=Api&P=0&h=180" alt="C Language Logo">
+                <h2>C Language</h2>
+            </a>
+            <a href="https://bytexl.app/course-catalog-groups/3z7n9uvkv/daa-design-analysis-algorithms?tab=all" class="course-card">
+                <img src="https://thumbs.dreamstime.com/b/dsa-letter-initial-logo-design-vector-illustration-dsa-letter-initial-logo-design-vector-illustration-letter-initial-logo-design-236624228.jpg" alt="DSA Logo">
+                <h2>DSA</h2>
+            </a>
+            <a href="https://bytexl.app/course-catalog-groups/3zeuvj5n3/linux" class="course-card">
+                <img src="https://logos-world.net/wp-content/uploads/2020/09/Linux-Symbol.png" alt="Linux Logo">
+                <h2>Linux</h2>
+            </a>
+        </div>
+    </main>
+</body>
+</html>

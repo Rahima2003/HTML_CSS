@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bCAP Program</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #ffecd2, #fcb69f);
+            color: #333;
+            overflow: hidden;
+            position: relative;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+            font-size: 2em;
+            letter-spacing: 2px;
+        }
+
+        .course-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2em;
+            gap: 2em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .course-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 220px;
+            cursor: pointer;
+            text-align: center;
+            position: relative;
+            padding-top: 180px;
+        }
+
+        .course-card img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .course-card h2, .course-card p {
+            margin: 0;
+            padding: 0.5em 1em;
+            position: relative;
+        }
+
+        .course-card h2 {
+            background-color: #333;
+            color: white;
+            font-size: 1.2em;
+        }
+
+        .course-card p {
+            color: gray;
+            padding-bottom: 1em;
+        }
+
+        .course-card .progress-bar {
+            width: 80%;
+            background-color: #f3f3f3;
+            border-radius: 5px;
+            margin: 10px auto;
+            overflow: hidden;
+        }
+
+        .course-card .progress-bar div {
+            height: 10px;
+            background-color: #4caf50;
+            width: 50%; /* Example percentage */
+        }
+
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .course-card:hover::before {
+            opacity: 1;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .course-card:hover h2, .course-card:hover p {
+            color: #fff;
+        }
+
+        @keyframes moveBackground {
+            0% { background-position: 0 0; }
+            100% { background-position: 100% 100%; }
+        }
+
+        .animated-background {
+            background-image: url('https://your-image-url'); /* Replace with your desired background image */
+            background-size: cover;
+            background-repeat: no-repeat;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.5;
+            animation: moveBackground 20s linear infinite;
+        }
+
+        .scrollable-section, .enrolled-courses, .recommendations, .all-courses {
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .scroll-container {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .scroll-item {
+            min-width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+        }
+
+        .scroll-item .text-content {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .scroll-item h2 {
+            margin: 0;
+        }
+
+        .scroll-item p {
+            margin: 10px 0;
+        }
+
+        .scroll-item .learn-more {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #000;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .scroll-item img {
+            max-width: 50%;
+            height: auto;
+            display: block;
+        }
+
+        .nav-arrow {
+            width: 40px;
+            height: 40px;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 2;
+        }
+
+        .nav-arrow.left {
+            left: 10px;
+        }
+
+        .nav-arrow.right {
+            right: 10px;
+        }
+
+        .courses-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .course {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 100px;
+            max-width: 150px;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .course img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            max-width: 100%;
+            max-height: 100px;
+        }
+
+        .course-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .course-details h3 {
+            margin: 0 0 10px 0;
+            font-size: 1em;
+        }
+
+        .course-details p {
+            margin: 5px 0;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .highlight {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-background"></div>
+    <header>
+        bCAP Program
+    </header>
+    <main>
+        <div class="course-container">
+            <div class="course-card" onclick="navigateToCourse('https://bytexl.app/course-catalog-groups/3z7naufue/python?tab=all')">
+                <img src="https://static.vecteezy.com/system/resources/previews/012/697/295/non_2x/3d-python-programming-language-logo-free-png.png" alt="Python Logo">
+                <h2>Python</h2>
+                <div class="progress-bar"><div style="width: 60%;"></div></div> <!-- Example progress -->
+            </div>
+            <div class="course-card" onclick="navigateToCourse('https://bytexl.app/course-catalog-groups/3zarwnsvr/java?tab=all')">
+                <img src="https://tse1.mm.bing.net/th?id=OIP.jap_cRszSOiPk-lu65mFLwHaEK&pid=Api&P=0&h=180" alt="Java Logo">
+                <h2>Java</h2>
+                <div class="progress-bar"><div style="width: 40%;"></div></div> <!-- Example progress -->
+            </div>
+            <div class="course-card" onclick="navigateToCourse('https://bytexl.app/course-catalog-groups/3z3nxgnxd/c-programing-for-problem-solving?tab=all')">
+                <img src="https://tse2.mm.bing.net/th?id=OIP.-wK8kSbegCP7kdE8hVjRCQAAAA&pid=Api&P=0&h=180" alt="C Language Logo">
+                <h2>C Language</h2>
+                <div class="progress-bar"><div style="width: 30%;"></div></div> <!-- Example progress -->
+            </div>
+            <div class="course-card" onclick="navigateToCourse('https://bytexl.app/course-catalog-groups/3z7n9uvkv/daa-design-analysis-algorithms?tab=all')">
+                <img src="https://thumbs.dreamstime.com/b/dsa-letter-initial-logo-design-vector-illustration-dsa-letter-initial-logo-design-vector-illustration-letter-initial-logo-design-236624228.jpg" alt="DSA Logo">
+                <h2>DSA</h2>
+                <div class="progress-bar"><div style="width: 50%;"></div></div> <!-- Example progress -->
+            </div>
+            <div class="course-card" onclick="navigateToCourse('https://bytexl.app/course-catalog-groups/3zeuvj5n3/linux')">
+                <img src="https://logos-world.net/wp-content/uploads/2020/09/Linux-Symbol.png" alt="Linux Logo">
+                <h2>Linux</h2>
+                <div class="progress-bar"><div style="width: 70%;"></div></div> <!-- Example progress -->
+            </div>
+        </div>
+
+        <div class="scrollable-section">
+            <div class="nav-arrow left" onclick="navigateScroll(-1)">&lt;</div>
+            <div class="scroll-container">
+                <div class="scroll-item">
+                    <div class="text-content">
+                        <h2>Transform Your Career</h2>
+                        <p>Set your career goals and achieve them with ByteXL. Our comprehensive courses and expert guidance will help you reach new heights.</p>
+                        <a href="#" class="learn-more">Learn more</a>
+                    </div>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwM2UBeRL_yRm-72HHnUCV9gEGawA_l7H8bCEJapJnUnQWjd6WbHpFlJaAgB57wkIJyvA&usqp=CAU" alt="Image 1">
+                </div>
+                <div class="scroll-item">
+                    <div class="text-content">
+                        <h2>Learn from the Best</h2>
+                        <p>Study at your own pace with ByteXL's flexible learning options. Whether you're a beginner or looking to advance your skills, we have a course for you.</p>
+                        <a href="#" class="learn-more">Learn more</a>
+                    </div>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZxrdHpf4lgtIsFTlKf7wal3P6sn9EHwcLoQ&usqp=CAU" alt="Image 2">
+                </div>
+                <div class="scroll-item">
+                    <div class="text-content">
+                        <h2>Flexible Learning</h2>
+                        <p>Access top-notch courses designed by industry experts. ByteXL brings you the best in tech education, from coding to machine learning.</p>
+                        <a href="#" class="learn-more">Learn more</a>
+                    </div>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4vVW4kneS-rBVZccLOchXMytsW_2Hl1H0bQ&usqp=CAU" alt="Image 3">
+                </div>
+            </div>
+            <div class="nav-arrow right" onclick="navigateScroll(1)">&gt;</div>
+        </div>
+
+        <div class="enrolled-courses">
+            <h2>Enrolled Courses</h2>
+            <div class="courses-container">
+                <div class="course" onclick="navigateToCourse('https://bytexl.app/course-catalog-groups/3z7naufue/python?tab=all')">
+                    <img src="https://wallpapercg.com/media/ts_orig/22910.webp" alt="Python Course">
+                    <div class="course-details">
+                        <h3>Python</h3>
+                        <div class="progress-bar"><div style="width: 60%;"></div></div> <!-- Example progress -->
+                    </div>
+                </div>
+                <div class="course" onclick="navigateToCourse('https://bytexl.app/course-catalog-groups/3zarwnsvr/java?tab=all')">
+                    <img src="https://w0.peakpx.com/wallpaper/157/626/HD-wallpaper-java-glitter-logo-programming-language-grid-metal-background-java-creative-programming-language-signs-java-logo.jpg" alt="Java Course">
+                    <div class="course-details">
+                        <h3>Java</h3>
+                        <div class="progress-bar"><div style="width: 40%;"></div></div> <!-- Example progress -->
+                    </div>
+                </div>
+                <!-- Add more courses as needed -->
+            </div>
+        </div>
+
+        <div class="recommendations">
+            <h2>Recommendations</h2>
+            <div class="courses-container">
+                <div class="course" onclick="navigateToCourse('https://bytexl.app/course-catalog-groups/3z7naufue/python?tab=all')">
+                    <img src="https://wallpapercg.com/media/ts_orig/22910.webp" alt="Python Course">
+                    <div class="course-details">
+                        <h3>Python</h3>
+                        <div class="progress-bar"><div style="width: 60%;"></div></div> <!-- Example progress -->
+                    </div>
+                </div>
+                <div class="course" onclick="navigateToCourse('https://bytexl.app/course-catalog-groups/3zarwnsvr/java?tab=all')">
+                    <img src="https://w0.peakpx.com/wallpaper/157/626/HD-wallpaper-java-glitter-logo-programming-language-grid-metal-background-java-creative-programming-language-signs-java-logo.jpg" alt="Java Course">
+                    <div class="course-details">
+                        <h3>Java</h3>
+                        <div class="progress-bar"><div style="width: 40%;"></div></div> <!-- Example progress -->
+                    </div>
+                </div>
+                <!-- Add more courses as needed -->
+            </div>
+        </div>
+
+        <div class="all-courses">
+            <h2>All Courses</h2>
+            <div class="courses-container">
+                <div class="course" onclick="navigateToCourse('https://bytexl.app/course-catalog-groups/3z7naufue/python?tab=all')">
+                    <img src="https://wallpapercg.com/media/ts_orig/22910.webp" alt="Python Course">
+                    <div class="course-details">
+                        <h3>Python</h3>
+                        <div class="progress-bar"><div style="width: 60%;"></div></div> <!-- Example progress -->
+                    </div>
+                </div>
+                <div class="course" onclick="navigateToCourse('https://bytexl.app/course-catalog-groups/3zarwnsvr/java?tab=all')">
+                    <img src="https://w0.peakpx.com/wallpaper/157/626/HD-wallpaper-java-glitter-logo-programming-language-grid-metal-background-java-creative-programming-language-signs-java-logo.jpg" alt="Java Course">
+                    <div class="course-details">
+                        <h3>Java</h3>
+                        <div class="progress-bar"><div style="width: 40%;"></div></div> <!-- Example progress -->
+                    </div>
+                </div>
+                <div class="course" onclick="navigateToCourse('https://bytexl.app/course-catalog-groups/3z3nxgnxd/c-programing-for-problem-solving?tab=all')">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS14y0WHEcWJdNJwei2cOIzCzUYdonds5SAIQ&usqp=CAU" alt="C Programming Course">
+                    <div class="course-details">
+                        <h3>C Programming</h3>
+                        <div class="progress-bar"><div style="width: 30%;"></div></div> <!-- Example progress -->
+                    </div>
+                </div>
+                <div class="course" onclick="navigateToCourse('https://bytexl.app/course-catalog-groups/3z7n9uvkv/daa-design-analysis-algorithms?tab=all')">
+                    <img src="https://thumbs.dreamstime.com/b/daa-letter-logo-design-white-background-creative-initials-concept-255140480.jpg" alt="DAA Course">
+                    <div class="course-details">
+                        <h3>DAA</h3>
+                        <div class="progress-bar"><div style="width: 50%;"></div></div> <!-- Example progress -->
+                    </div>
+                </div>
+                <!-- Add more courses as needed -->
+            </div>
+        </div>
+    </main>
+    <script>
+        let scrollIndex = 0;
+
+        function navigateScroll(direction) {
+            const container = document.querySelector('.scroll-container');
+            const items = document.querySelectorAll('.scroll-item');
+            const totalItems = items.length;
+
+            scrollIndex = (scrollIndex + direction + totalItems) % totalItems;
+            const translateX = -scrollIndex * 100;
+
+            container.style.transform = `translateX(${translateX}%)`;
+        }
+
+        function navigateToCourse(url) {
+            window.location.href = url;
+        }
+
+        function searchCourses() {
+            const searchQuery = document.querySelector('.search-bar input').value.toLowerCase();
+            const courses = document.querySelectorAll('.course');
+            courses.forEach(course => {
+                const courseName = course.querySelector('.course-details h3').innerText.toLowerCase();
+                if (courseName.includes(searchQuery)) {
+                    course.classList.add('highlight');
+                } else {
+                    course.classList.remove('highlight');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

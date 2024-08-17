@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bCAP Program and Python Foundation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #ffecd2, #fcb69f);
+            color: #333;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+            font-size: 2em;
+            letter-spacing: 2px;
+            
+        }
+
+        .course-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2em;
+            gap: 2em;
+        }
+
+        .course-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 220px;
+            cursor: pointer;
+            text-align: center;
+            position: relative;
+            padding-top: 160px; /* Adjusted padding to avoid overlap */
+        }
+
+        .course-card img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .course-card h2, .course-card p {
+            margin: 0;
+            padding: 0.5em 1em;
+            position: relative;
+        }
+
+        .course-card h2 {
+            background-color: #333;
+            color: white;
+            font-size: 1.2em;
+        }
+
+        .course-card p {
+            color: gray;
+            padding-bottom: 1em;
+        }
+
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .course-card:hover::before {
+            opacity: 1;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .course-card:hover h2, .course-card:hover p {
+            color: #fff;
+        }
+
+        @keyframes moveBackground {
+            0% { background-position: 0 0; }
+            100% { background-position: 100% 100%; }
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/french-stucco.png');
+            opacity: 0.1;
+            z-index: -1;
+            animation: moveBackground 20s linear infinite;
+        }
+
+        .animated-background {
+            background-image: url('image.png'); /* Replace with your colorful background image */
+            background-size: cover;
+            background-repeat: no-repeat;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 80%;
+            height: 80%;
+            z-index: -2;
+        }
+
+        #pythonFoundation {
+            display: none;
+        }
+
+        .timeline {
+            position: relative;
+            width: 90%;
+            max-width: 1000px;
+            margin: 40px auto;
+        }
+        .container {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            margin: 20px 0;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .container:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .main-topic {
+            flex: 1;
+            padding: 20px;
+            background-color: #FFA500;
+            color: #fff;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            cursor: pointer;
+            position: relative;
+            transition: background-color 0.3s;
+        }
+        .main-topic img {
+            border-radius: 50%;
+            margin-right: 10px;
+            width: 70px;
+            height: 70px;
+        }
+        .main-topic span {
+            flex: 1;
+            text-align: center;
+        }
+        .main-topic:hover {
+            background-color: #FF8C00;
+        }
+        .subtopics {
+            display: none;
+            flex-direction: column;
+            background-color: #FFEFD5;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 20px;
+        }
+        .subtopic {
+            padding: 10px 20px;
+            margin: 5px 0;
+            background-color: #FFDDC1;
+            border-radius: 50px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        .subtopic:hover {
+            background-color: #FFC3A0;
+        }
+        a {
+            color: #0077cc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #005999;
+            text-decoration: underline;
+        }
+        .circle {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #FFA500;
+            border-radius: 50%;
+            margin-left: 20px;
+        }
+    </style>
+    <script>
+        function navigateToPage(page) {
+            document.getElementById('bCAPProgram').style.display = 'none';
+            document.getElementById('pythonFoundation').style.display = 'block';
+        }
+
+        function toggleSubtopics(id) {
+            var element = document.getElementById(id);
+            if (element.style.display === "none" || element.style.display === "") {
+                element.style.display = "flex";
+            } else {
+                element.style.display = "none";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="animated-background"></div>
+
+    <!-- bCAP Program Section -->
+    <div id="bCAPProgram">
+        <header>
+            bCAP Program
+        </header>
+        <main>
+            <div class="course-container">
+                <div class="course-card" onclick="navigateToPage('pythonFoundation')">
+                    <img src="https://static.vecteezy.com/system/resources/previews/012/697/295/non_2x/3d-python-programming-language-logo-free-png.png" alt="Python Logo">
+                    <h2>Python</h2>
+                </div>
+                <a href="https://bytexl.app/course-catalog-groups/3zarwnsvr/java?tab=all" class="course-card">
+                    <img src="https://tse1.mm.bing.net/th?id=OIP.jap_cRszSOiPk-lu65mFLwHaEK&pid=Api&P=0&h=180" alt="Java Logo">
+                    <h2>Java</h2>
+                </a>
+                <a href="https://bytexl.app/course-catalog-groups/3z3nxgnxd/c-programing-for-problem-solving?tab=all" class="course-card">
+                    <img src="https://tse2.mm.bing.net/th?id=OIP.-wK8kSbegCP7kdE8hVjRCQAAAA&pid=Api&P=0&h=180" alt="C Language Logo">
+                    <h2>C Language</h2>
+                </a>
+                <a href="https://bytexl.app/course-catalog-groups/3z7n9uvkv/daa-design-analysis-algorithms?tab=all" class="course-card">
+                    <img src="https://thumbs.dreamstime.com/b/dsa-letter-initial-logo-design-vector-illustration-dsa-letter-initial-logo-design-vector-illustration-letter-initial-logo-design-236624228.jpg" alt="DSA Logo">
+                    <h2>DSA</h2>
+                </a>
+                <a href="https://bytexl.app/course-catalog-groups/3zeuvj5n3/linux" class="course-card">
+                    <img src="https://logos-world.net/wp-content/uploads/2020/09/Linux-Symbol.png" alt="Linux Logo">
+                    <h2>Linux</h2>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <!-- Python Foundation Section -->
+    <div id="pythonFoundation">
+        <header>
+            Python Programming Foundation Course
+        </header>
+
+        <div class="timeline">
+            <div class="container">
+                <div class="main-topic" onclick="toggleSubtopics('subtopics1')">
+                    <img src="https://pbs.twimg.com/profile_images/424495004/GuidoAvatar_400x400.jpg" alt="Python Logo">
+                    <span>Introduction to Python</span>
+                </div>
+                <div class="circle"></div>
+                <div class="subtopics" id="subtopics1">
+                    <div class="subtopic"><a href="https://bytexl.app/content/3zeuvj5n3/python/3zh4pzccw/introduction-to-python/history-and-features-of-python">History and Features</a></div>
+                    <div class="subtopic"><a href="https://bytexl.app/content/3zeuvj5n3/python/3zh4qbg3w/introduction-to-python/installing-python-and-setting-up-the-environment">Installing Python</a></div>
+                    <div class="subtopic"><a href="https://bytexl.app/content/3zeuvj5n3/python/3zh4uewzx/introduction-to-python/executing-python-code">Executing Python Code</a></div>
+                    <div class="subtopic"><a href="https://bytexl.app/content/3zeuvj5n3/python/3zh4wu3su/introduction-to-python/basic-data-types-and-variables">Data Types and Variables</a></div>
+                    <div class="subtopic"><a href="https://bytexl.app/content/3zeuvj5n3/python/3zh7derxa/introduction-to-python/input-and-output-print-and-input-functions">Input and Output</a></div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="main-topic" onclick="toggleSubtopics('subtopics2')">
+                    <img src="https://static.wixstatic.com/media/e90ace_5fd1b3248753405c916fa7bc5b8585ca~mv2.jpg/v1/fill/w_640,h_448,al_c,lg_1,q_80,enc_auto/e90ace_5fd1b3248753405c916fa7bc5b8585ca~mv2.jpg" alt="Operators Logo">
+                    <span>Operators and Expressions</span>
+                </div>
+                <div class="circle"></div>
+                <div class="subtopics" id="subtopics2">
+                    <div class="subtopic"><a href="https://bytexl.app/content/3zeuvj5n3/python/3zmz28wwt/operators-and-expressions/variables">Variables</a></div>
+                    <div class="subtopic"><a href="https://bytexl.app/content/3zeuvj5n3/python/3zh7skuw9/operators-and-expressions/operators">Operators</a></div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="main-topic" onclick="toggleSubtopics('subtopics3')">
+                    <img src="https://e7.pngegg.com/pngimages/181/1013/png-clipart-decision-to-decision-path-control-flow-graph-path-graph-basis-path-testing-others-miscellaneous-angle-thumbnail.png" alt="Control Flow Logo">
+                    <span>Control Flow</span>
+                </div>
+                <div class="circle"></div>
+                <div class="subtopics" id="subtopics3">
+                    <div class="subtopic"><a href="https://bytexl.app/content/3zeuvj5n3/python/3zmz4fncs/control-flow/conditional-statements">Conditional Statements</a></div>
+                    <div class="subtopic"><a href="https://bytexl.app/content/3zeuvj5n3/python/3zmz4me59/control-flow/looping-statements">Looping Statements</a></div>
+                    <div class="subtopic"><a href="https://bytexl.app/content/3zeuvj5n3/python/3zmz6bjvu/control-flow/break-continue-pass-statement">Break, Continue, Pass Statements</a></div>
+                    <div class="subtopic"><a href="https://bytexl.app/content/3zeuvj5n3/python/3zmz6nwy9/control-flow/looping-through-data-range-enumerate">Looping through Data (range, enumerate)</a></div>
+                    <div class="subtopic"><a href="https://bytexl.app/content/3zeuvj5n3/python/3zmz6yc7f/control-flow/iterating-with-for-loops-lists-strings-tuples">Iterating with for Loops (lists, strings, tuples)</a></div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="main-topic" onclick="toggleSubtopics('subtopics4')">
+                    <img src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*BtuHe_nyh2RqVnVsCHr4Hw.png" alt="Data Structures Logo">
+                    <span>Data Structures</span>
+                </div>
+                <div class="circle"></div>
+                <div class="subtopics" id="subtopics4">
+                    <div class="subtopic"><a href="https://bytexl.app/content/3zeuvj5n3/python/3zmz7br4p/data-structures/list-and-tuples-with-methods">List and Tuples with Methods</a></div>
+                    <div class="subtopic"><a href="https://bytexl.app/content/3zeuvj5n3/python/3zmz7gyvv/data-structures/sets-and-set-methods">Sets and Set Methods</a></div>
+                    <div class="subtopic"><a href="https://bytexl.app/content/3zeuvj5n3/python/3zmzavfcn/data-structures/dictionaries-and-dictionary-methods">Dictionaries and Dictionary Methods</a></div>
+                    <div class="subtopic"><a href="https://bytexl.app/content/3zeuvj5n3/python/3zmzaxt65/data-structures/list-comprehensions-and-generators">List Comprehensions and Generators</a></div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="main-topic" onclick="toggleSubtopics('subtopics5')">
+                    <img src="https://miro.medium.com/v2/resize:fit:1000/1*ytZA6eAVs7-Ns3JAgYJ_Bw.png" alt="Functions and Modules Logo">
+                    <span>Functions and Modules</span>
+                </div>
+                <div class="circle"></div>
+                <div class="subtopics" id="subtopics5">
+                    <div class="subtopic"><a href="https://bytexl.app/content/3zeuvj5n3/python/3zmzbhngf/functions-and-modules/functions">Functions</a></div>
+                    <div class="subtopic"><a href="https://bytexl.app/content/3zeuvj5n3/python/3zmzc22jb/functions-and-modules/lambda-functions-and-built-in-functions">Lambda Functions and Built-in Functions</a></div>
+                    <div class="subtopic"><a href="https://bytexl.app/content/3zeuvj5n3/python/3zmzcdskc/functions-and-modules/organizing-code-into-modules-and-packages">Organizing Code into Modules and Packages</a></div>
+                    <div class="subtopic"><a href="https://bytexl.app/content/3zeuvj5n3/python/3zmzcpq36/functions-and-modules/wrapper-classes-generators-recursions">Wrapper Classes, Generators, Recursions</a></div>
+                    <div class="subtopic"><a href="https://bytexl.app/content/3zeuvj5n3/python/3zmzd3rjm/functions-and-modules/importing-and-using-external-modules">Importing and Using External Modules</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

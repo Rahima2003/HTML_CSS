@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ByteXL Platform</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+        .navbar {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            padding: 10px 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .logo img {
+            height: 40px;
+        }
+        .categories {
+            position: relative;
+            display: inline-block;
+            margin-left: 20px;
+        }
+        .dropbtn {
+            background-color: #fff;
+            color: black;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #F9F9F9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #F1F1F1;
+        }
+        .categories:hover .dropdown-content {
+            display: block;
+        }
+        .search-bar {
+            flex-grow: 1;
+            margin-left: 20px;
+            max-width: 200px;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+        }
+        .my-learning {
+            margin-left: 20px;
+        }
+        .my-learning a {
+            text-decoration: none;
+            color: black;
+            padding: 10px;
+        }
+        .student-icon {
+            margin-left: 20px;
+            background-color: black;
+            color: white;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        .welcome-section {
+            background-color: #fff;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .welcome-text {
+            margin-left: 20px;
+        }
+        .welcome-text h1 {
+            margin: 0;
+        }
+        .scrollable-section {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .scroll-container {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .scroll-item {
+            min-width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+        }
+        .scroll-item .text-content {
+            flex: 1;
+            padding: 20px;
+        }
+        .scroll-item h2 {
+            margin: 0;
+        }
+        .scroll-item p {
+            margin: 10px 0;
+        }
+        .scroll-item .learn-more {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #000;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .scroll-item img {
+            max-width: 50%;
+            height: auto;
+            display: block;
+        }
+        .nav-arrow {
+            width: 40px;
+            height: 40px;
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 2;
+        }
+        .nav-arrow.left {
+            left: 10px;
+        }
+        .nav-arrow.right {
+            right: 10px;
+        }
+        .enrolled-courses, .recommendations, .all-courses {
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        .enrolled-courses h2, .recommendations h2, .all-courses h2 {
+            margin: 0 0 20px 0;
+        }
+        .courses-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .course {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 100px;
+            max-width: 150px;
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            color: inherit;
+        }
+        .course img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            max-width: 100%;
+            max-height: 100px;
+        }
+        .course-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .course-details h3 {
+            margin: 0 0 10px 0;
+            font-size: 1em;
+        }
+        .course-details p {
+            margin: 5px 0;
+            color: #666;
+            font-size: 0.9em;
+        }
+        .highlight {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="https://bytexl.app/static/media/bytexl.e7dd1e7b8a239386c438.png" alt="ByteXL Logo">
+        </div>
+        <div class="categories">
+            <button class="dropbtn">Categories</button>
+            <div class="dropdown-content">
+                <a href="#">Fullstack</a>
+                <a href="#">Machine Learning</a>
+                <a href="#">Python</a>
+                <a href="#">Java</a>
+            </div>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search for anything" oninput="searchCourses()">
+        </div>
+        <div class="my-learning">
+            <a href="#">My Learning</a>
+        </div>
+        <div class="student-icon">
+            <span>SR</span>
+        </div>
+    </nav>
+
+    <div class="welcome-section">
+        <div class="student-icon">SR</div>
+        <div class="welcome-text">
+            <h1>Welcome back, Shaik</h1>
+        </div>
+    </div>
+
+    <div class="scrollable-section">
+        <div class="nav-arrow left" onclick="navigateScroll(-1)">&lt;</div>
+        <div class="scroll-container">
+            <div class="scroll-item">
+                <div class="text-content">
+                    <h2>Transform Your Career</h2>
+                    <p>Set your career goals and achieve them with ByteXL. Our comprehensive courses and expert guidance will help you reach new heights.</p>
+                    <a href="#" class="learn-more">Learn more</a>
+                </div>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwM2UBeRL_yRm-72HHnUCV9gEGawA_l7H8bCEJapJnUnQWjd6WbHpFlJaAgB57wkIJyvA&usqp=CAU" alt="Image 1">
+            </div>
+            <div class="scroll-item">
+                <div class="text-content">
+                    <h2>Learn from the Best</h2>
+                    <p>Study at your own pace with ByteXL's flexible learning options. Whether you're a beginner or looking to advance your skills, we have a course for you.</p>
+                    <a href="#" class="learn-more">Learn more</a>
+                </div>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZxrdHpf4lgtIsFTlKf7wal3P6sn9EHwcLoQ&usqp=CAU" alt="Image 2">
+            </div>
+            <div class="scroll-item">
+                <div class="text-content">
+                    <h2>Flexible Learning</h2>
+                    <p>Access top-notch courses designed by industry experts. ByteXL brings you the best in tech education, from coding to machine learning.</p>
+                    <a href="#" class="learn-more">Learn more</a>
+                </div>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4vVW4kneS-rBVZccLOchXMytsW_2Hl1H0bQ&usqp=CAU" alt="Image 3">
+            </div>
+        </div>
+        <div class="nav-arrow right" onclick="navigateScroll(1)">&gt;</div>
+    </div>
+
+    <div class="enrolled-courses">
+        <h2>Enrolled Courses</h2>
+        <div class="courses-container" id="enrolled-courses">
+            <a href="https://bytexl.app/course-catalog-groups/3z7naufue/python?tab=all" class="course">
+                <img src="https://wallpapercg.com/media/ts_orig/22910.webp" alt="Python Course">
+                <div class="course-details">
+                    <h3>Python</h3>
+                </div>
+            </a>
+            <a href="https://bytexl.app/course-catalog-groups/3zarwnsvr/java?tab=all" class="course">
+                <img src="https://w0.peakpx.com/wallpaper/157/626/HD-wallpaper-java-glitter-logo-programming-language-grid-metal-background-java-creative-programming-language-signs-java-logo.jpg" alt="Java Course">
+                <div class="course-details">
+                    <h3>Java</h3>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="recommendations">
+        <h2>Recommendations</h2>
+        <div class="courses-container" id="recommendations">
+            <!-- Courses will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <div class="all-courses">
+        <h2>All Courses</h2>
+        <div class="courses-container" id="all-courses">
+            <a href="https://bytexl.app/course-catalog-groups/3z7naufue/python?tab=all" class="course">
+                <img src="https://wallpapercg.com/media/ts_orig/22910.webp" alt="Python Course">
+                <div class="course-details">
+                    <h3>Python</h3>
+                </div>
+            </a>
+            <a href="https://bytexl.app/course-catalog-groups/3zarwnsvr/java?tab=all" class="course">
+                <img src="https://w0.peakpx.com/wallpaper/157/626/HD-wallpaper-java-glitter-logo-programming-language-grid-metal-background-java-creative-programming-language-signs-java-logo.jpg" alt="Java Course">
+                <div class="course-details">
+                    <h3>Java</h3>
+                </div>
+            </a>
+            <a href="https://bytexl.app/course-catalog-groups/3z3nxgnxd/c-programing-for-problem-solving?tab=all" class="course">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS14y0WHEcWJdNJwei2cOIzCzUYdonds5SAIQ&usqp=CAU" alt="C Programming Course">
+                <div class="course-details">
+                    <h3>C Programming</h3>
+                </div>
+            </a>
+            <a href="https://bytexl.app/course-catalog-groups/3z7n9uvkv/daa-design-analysis-algorithms?tab=all" class="course">
+                <img src="https://www.shutterstock.com/image-vector/daa-initial-letter-monogram-logo-600w-2287160097.jpg" alt="DAA Course">
+                <div class="course-details">
+                    <h3>DAA</h3>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        let scrollIndex = 0;
+
+        function navigateScroll(direction) {
+            const container = document.querySelector('.scroll-container');
+            const items = document.querySelectorAll('.scroll-item');
+            const totalItems = items.length;
+
+            scrollIndex = (scrollIndex + direction + totalItems) % totalItems;
+            const translateX = -scrollIndex * 100;
+
+            container.style.transform = `translateX(${translateX}%)`;
+        }
+
+        function searchCourses() {
+            const searchQuery = document.querySelector('.search-bar input').value.toLowerCase();
+            const courses = document.querySelectorAll('.course');
+            courses.forEach(course => {
+                const courseName = course.querySelector('.course-details h3').innerText.toLowerCase();
+                if (courseName.includes(searchQuery)) {
+                    course.classList.add('highlight');
+                } else {
+                    course.classList.remove('highlight');
+                }
+            });
+        }
+
+        function loadRecommendations() {
+            const enrolledCourses = document.querySelectorAll('#enrolled-courses .course');
+            const allCourses = document.querySelectorAll('#all-courses .course');
+            const enrolledCourseNames = Array.from(enrolledCourses).map(course => course.querySelector('.course-details h3').innerText);
+
+            const recommendationsContainer = document.getElementById('recommendations');
+            allCourses.forEach(course => {
+                const courseName = course.querySelector('.course-details h3').innerText;
+                if (!enrolledCourseNames.includes(courseName)) {
+                    recommendationsContainer.appendChild(course.cloneNode(true));
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', loadRecommendations);
+    </script>
+</body>
+</html>

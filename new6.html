@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bCAP Program and Python Foundation</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        header {
+            background-color: #00AEEF; /* Changed to match image blue */
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+            font-size: 2em;
+            letter-spacing: 2px;
+        }
+
+        .course-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2em auto;
+            gap: 2em;
+            max-width: 1200px;
+        }
+
+        .course-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 220px;
+            cursor: pointer;
+            text-align: center;
+            position: relative;
+            padding-top: 160px;
+        }
+
+        .course-card img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .course-card h2 {
+            background-color: #00AEEF; /* Changed to match image blue */
+            color: white;
+            font-size: 1.2em;
+            margin: 0;
+            padding: 0.5em 1em;
+            position: relative;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .course-card:hover h2 {
+            color: #fff;
+        }
+
+        .section {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px 0;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            background-color: #00AEEF; /* Changed to match image blue */
+            color: white;
+            padding: 10px;
+            font-size: 1.5em;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 10px 10px 0 0;
+            position: relative;
+        }
+
+        .section-title:hover .subtopics {
+            display: block;
+        }
+
+        .subtopics {
+            display: none;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-left: 4px solid #00AEEF; /* Changed to match image blue */
+            margin-top: 10px;
+            border-radius: 0 0 10px 10px;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .subtopic {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
+
+        .subtopic:hover {
+            background-color: #f0f0f0;
+        }
+
+        nav {
+            background-color: #00AEEF; /* Changed to match image blue */
+            padding: 10px;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        nav .left-links, nav .right-links {
+            display: flex;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 1.1em;
+        }
+
+        nav .right-links a {
+            margin-left: auto;
+        }
+
+        a {
+            color: #00AEEF; /* Changed to match image blue */
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #007B9F; /* Slightly darker blue */
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        function navigateToPage(page) {
+            document.getElementById('bCAPProgram').style.display = 'none';
+            document.getElementById('pythonFoundation').style.display = 'block';
+        }
+
+        function toggleSubtopics(id) {
+            var element = document.getElementById(id);
+            if (element.style.display === "none" || element.style.display === "") {
+                element.style.display = "block";
+            } else {
+                element.style.display = "none";
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        bCAP Program
+    </header>
+
+    <div id="bCAPProgram">
+        <div class="course-container">
+            <div class="course-card" onclick="navigateToPage('pythonFoundation')">
+                <img src="https://static.vecteezy.com/system/resources/previews/012/697/295/non_2x/3d-python-programming-language-logo-free-png.png" alt="Python Logo">
+                <h2>Python</h2>
+            </div>
+            <a href="https://bytexl.app/course-catalog-groups/3zarwnsvr/java?tab=all" class="course-card">
+                <img src="https://tse1.mm.bing.net/th?id=OIP.jap_cRszSOiPk-lu65mFLwHaEK&pid=Api&P=0&h=180" alt="Java Logo">
+                <h2>Java</h2>
+            </a>
+            <a href="https://bytexl.app/course-catalog-groups/3z3nxgnxd/c-programing-for-problem-solving?tab=all" class="course-card">
+                <img src="https://tse2.mm.bing.net/th?id=OIP.-wK8kSbegCP7kdE8hVjRCQAAAA&pid=Api&P=0&h=180" alt="C Language Logo">
+                <h2>C Language</h2>
+            </a>
+            <a href="https://bytexl.app/course-catalog-groups/3z7n9uvkv/daa-design-analysis-algorithms?tab=all" class="course-card">
+                <img src="https://thumbs.dreamstime.com/b/dsa-letter-initial-logo-design-vector-illustration-dsa-letter-initial-logo-design-vector-illustration-letter-initial-logo-design-236624228.jpg" alt="DSA Logo">
+                <h2>DSA</h2>
+            </a>
+            <a href="https://bytexl.app/course-catalog-groups/3zeuvj5n3/linux" class="course-card">
+                <img src="https://logos-world.net/wp-content/uploads/2020/09/Linux-Symbol.png" alt="Linux Logo">
+                <h2>Linux</h2>
+            </a>
+        </div>
+    </div>
+
+    <div id="pythonFoundation" style="display: none;">
+        <header>
+            Python Programming Foundation Course
+        </header>
+        
+        <nav>
+            <div class="left-links">
+                <!-- Left links can go here if needed in the future -->
+            </div>
+            <div class="right-links">
+                <a href="#">Projects</a>
+                <a href="#">Coding Challenges</a>
+            </div>
+        </nav>
+
+        <div class="section">
+            <div class="section-title">
+                <span>Introduction to Python</span>
+                <span>&#x25BC;</span>
+                <div class="subtopics">
+                    <div class="subtopic"><a href="https://bytexl.app/content/3zeuvj5n3/python/3zh4pzccw/introduction-to-python/history-and-features-of-python">History and Features</a></div>
+                    <div class="subtopic"><a href="https://bytexl.app/content/3zeuvj5n3/python/3zh4qbg3w/introduction-to-python/installing-python-and-setting-up-the-environment">Installing Python</a></div>
+                    <div class="subtopic"><a href="https://bytexl.app/content/3zeuvj5n3/python/3zh4uewzx/introduction-to-python/executing-python-code">Executing Python Code</a></div>
+                    <div class="subtopic"><a href="https://bytexl.app/content/3zeuvj5n3/python/3zh4wu3su/introduction-to-python/basic-data-types-and-variables">Data Types and Variables</a></div>
+                    <div class="subtopic"><a href="https://bytexl.app/content/3zeuvj5n3/python/3zh7derxa/introduction-to-python/input-and-output-print-and-input-functions">Input and Output</a></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title" onclick="toggleSubtopics('subtopics2')">
+                <span>Operators and Expressions</span>
+                <span>&#x25BC;</span>
+            </div>
+            <div class="subtopics" id="subtopics2">
+                <div class="subtopic"><a href="#">PPT</a></div>
+                <div class="subtopic"><a href="#">Reading Materials</a></div>
+                <div class="subtopic"><a href="#">Videos</a></div>
+                <div class="subtopic"><a href="#">Assessments</a></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title" onclick="toggleSubtopics('subtopics3')">
+                <span>Control Flow</span>
+                <span>&#x25BC;</span>
+            </div>
+            <div class="subtopics" id="subtopics3">
+                <div class="subtopic"><a href="#">PPT</a></div>
+                <div class="subtopic"><a href="#">Reading Materials</a></div>
+                <div class="subtopic"><a href="#">Videos</a></div>
+                <div class="subtopic"><a href="#">Assessments</a></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title" onclick="toggleSubtopics('subtopics4')">
+                <span>Data Structures</span>
+                <span>&#x25BC;</span>
+            </div>
+            <div class="subtopics" id="subtopics4">
+                <div class="subtopic"><a href="#">PPT</a></div>
+                <div class="subtopic"><a href="#">Reading Materials</a></div>
+                <div class="subtopic"><a href="#">Videos</a></div>
+                <div class="subtopic"><a href="#">Assessments</a></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title" onclick="toggleSubtopics('subtopics5')">
+                <span>Functions and Modules</span>
+                <span>&#x25BC;</span>
+            </div>
+            <div class="subtopics" id="subtopics5">
+                <div class="subtopic"><a href="#">PPT</a></div>
+                <div class="subtopic"><a href="#">Reading Materials</a></div>
+                <div class="subtopic"><a href="#">Videos</a></div>
+                <div class="subtopic"><a href="#">Assessments</a></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
